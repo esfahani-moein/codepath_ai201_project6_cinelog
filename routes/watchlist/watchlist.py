@@ -34,7 +34,11 @@ def add_film(user_id):
         return jsonify({"error": "film_id is required"}), 400
 
     try:
-        entry = add_to_watchlist(user_id=user_id, film_id=data["film_id"])
+        entry = add_to_watchlist(
+            user_id=user_id,
+            film_id=data["film_id"],
+            public=data.get("public", True),
+        )
         return jsonify(entry.to_dict()), 201
     except FilmNotFoundError as e:
         return jsonify({"error": str(e)}), 404
